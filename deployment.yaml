@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mlstudio-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mlstudio
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 30
+  template:
+    metadata:
+      name: mlstudio
+      labels:
+        app: mlstudio
+    spec:
+      containers:
+      - name: mlstudio
+        image: mylandmarktech/java-web-app
+        ports:
+        - containerPort: 8080
